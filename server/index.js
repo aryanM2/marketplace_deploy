@@ -8,7 +8,11 @@ const path = require("path");
 const fs = require("fs");
 app.use(cors());
 
-const uploadsDir = path.join(__dirname, "uploads");
+// Use /tmp directory for uploads in a serverless environment
+const uploadsDir = path.join(
+  process.platform === "win32" ? __dirname : "/tmp",
+  "uploads"
+);
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 
 const storage = multer.diskStorage({
@@ -46,7 +50,7 @@ function authMiddleware(req, res, next) {
 
 app.use(authMiddleware);
 
-app.use("/uploads", express.static(uploadsDir));
+app.use("/uploads", express.static(uploadsDir, { fallthrough: false }));
 app.post("/post-item-data", upload.array("images", 10), async (req, res) => {
   try {
     if (!req.userId)
@@ -69,7 +73,7 @@ app.post("/post-item-data", upload.array("images", 10), async (req, res) => {
 
     const images = files.map((file) => ({
       filename: file.filename,
-      path: path.join("uploads", file.filename).replace(/\\/g, "/"),
+      path: path.join(uploadsDir, file.filename).replace(/\\/g, "/"),
       contentType: file.mimetype,
       size: file.size,
       url: `/uploads/${file.filename}`,
@@ -185,10 +189,7 @@ app.delete("/post-item/:id", async (req, res) => {
     if (post.images && post.images.length) {
       for (const img of post.images) {
         try {
-          const filePath = path.join(
-            __dirname,
-            img.path || "uploads/" + img.filename
-          );
+          const filePath = img.path || path.join(uploadsDir, img.filename);
           if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
         } catch (e) {
           console.warn("Failed to delete file", e.message);
@@ -283,7 +284,7 @@ app.put("/post-item/:id", upload.array("images", 10), async (req, res) => {
     if (files.length) {
       const newImages = files.map((f) => ({
         filename: f.filename,
-        path: path.join("uploads", f.filename).replace(/\\/g, "/"),
+        path: path.join(uploadsDir, f.filename).replace(/\\/g, "/"),
         contentType: f.mimetype,
         size: f.size,
         url: `/uploads/${f.filename}`,
