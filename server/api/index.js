@@ -55,6 +55,10 @@ async function connectDB() {
   console.log("✅ MongoDB connected");
 }
 
+app.get("/", (req, res) => {
+  res.send("Backend working ✅");
+});
+
 // ✅ Routes
 app.get("/", (req, res) => res.send("Student Marketplace Backend Running ✅"));
 

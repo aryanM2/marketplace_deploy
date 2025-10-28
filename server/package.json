@@ -14,7 +14,7 @@
     "nodemon": "^3.1.0"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "node api/index.js",
     "dev": "nodemon server.js"
   },
   "engines": {
