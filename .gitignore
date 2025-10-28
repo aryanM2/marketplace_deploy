@@ -1,5 +1,7 @@
 # Dependencies
-node_modules/
+/server/node_modules
+/user/node_modules
+/server/uploads
 .env
 
 # Uploaded files
