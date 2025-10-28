@@ -1,0 +1,101 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    background-color: rgb(234, 255, 205);
+    z-index: 1020; 
+    height: 60px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 4%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: rgb(11, 176, 11);
+    text-align: center;
+    align-items: center;
+}
+.navLeft{
+    display: flex;
+    gap: 40px
+}
+
+
+.logo{
+    font-weight: 500;
+    font-size: larger;
+}
+
+.profile{
+    display: flex;
+        vertical-align: middle;
+    justify-content: center;
+    align-items: center;
+    margin: 13px;
+    gap: 28px;
+    margin: 1px;
+}
+.icon{
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    vertical-align: middle;
+    width: 36px;
+    height: 36px;
+    margin: 8px;
+}
+.profile button{
+     border: 1px solid rgb(11, 176, 11);
+    background-color: rgb(11, 176, 11);
+    color: white;
+    padding: 5px 18px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    
+    
+}
+
+.profile button:hover{
+        background-color: rgb(9, 140, 9);
+    border-color: rgb(9, 140, 9);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+.no-link-style{
+    list-style: none !important;
+}
+.navbar-item-dropdown .dropdown-toggle {
+    border: 1px solid rgb(11, 176, 11);
+    background-color: rgb(11, 176, 11) !important;
+    color: white;
+    padding: 5px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.navbar-item-dropdown .dropdown-toggle:hover {
+    background-color: rgb(9, 140, 9) !important;
+    border-color: rgb(9, 140, 9);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+@media(max-width:930px){
+    .deksUserName{
+        display: none;
+    }
+
+}
+
+@media(max-width:768px){
+    .deksUserName{
+        display: none;
+    }
+}
+

@@ -1,0 +1,121 @@
+.cardBox h1{
+    display: flex;
+        FONT-FAMILY: ui-serif;
+    gap: 50px;
+    margin: auto;
+    justify-content: center;
+    margin-top: 49px !important; 
+    color: rgb(11, 176, 11);;   
+}
+
+
+@keyframes fadeInSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.cardBox{
+    margin-top: 30px;
+    animation: fadeInSlideUp 1s ease-out forwards;
+}
+
+
+
+
+.cardB{
+    margin-top: 20px !important;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    display: flex;
+    gap: 50px;
+    margin: auto;
+    
+}
+
+.btns {
+    display: flex;
+    gap: 10px;
+}
+
+.gbtn{
+      border: 1px solid rgb(11, 176, 11);
+    background-color: rgb(11, 176, 11);
+    color: white;
+    padding: 10px 25px;
+   border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.rbtn{
+    background-color: rgb(196, 40, 40);
+     border: 1px solid rgb(196, 49, 49);
+     color: white;
+    padding: 10px 25px;
+     border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+
+}
+
+.rbtn:hover{
+    background-color: rgb(208, 1, 1);
+    border: 1px solid rgb(181, 22, 22);
+     transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.gbtn:hover{
+    background-color: rgb(9, 140, 9);
+    border-color: rgb(9, 140, 9);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+
+
+@media (max-width: 768px) {
+    .gbtn{
+            
+        border: 1px solid rgb(11, 176, 11);
+        background-color: rgb(11, 176, 11);
+        color: white;
+        padding: 7px 11px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 400;
+        transition: all 0.3s 
+ease;
+    
+    }
+
+    .rbtn{
+    background-color: rgb(196, 40, 40);
+     border: 1px solid rgb(196, 49, 49);
+      color: white;
+        padding: 7px 5px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 400;
+        transition: all 0.3s 
+ease;
+
+}
+
+.cardB{
+     display: flex;
+     gap: 26px;
+     flex-wrap: wrap
+}
+}

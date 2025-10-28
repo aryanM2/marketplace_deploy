@@ -1,0 +1,115 @@
+import React, { useEffect, useState } from 'react'
+import { Card } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import "./Item.css"
+import axios from 'axios'
+
+export default function Items() {
+    const [post, setPost] = useState([]);
+
+    useEffect(() => {
+        axios.get("http://localhost:8002/random-view").then((res) => {
+            setPost(res.data.allItems);
+            
+        });
+    }, []);
+
+
+
+
+
+
+  return (
+   
+        <div className="box headBox">
+            <div className="container">
+                <div className='heading' >
+                
+                    <h1>view & Sell Books, Notes, and <br />
+                        Gadgets In Your College</h1>
+
+                        <p>Save Money, Connect with Students, Fast and simple</p>
+                </div>
+
+            </div>
+
+
+         <div className='container post'>
+                    <div className='postDesc'>
+                            <b>
+                             Got books or notes lying around?<br />
+                             Earn money by selling them now!
+                            </b> 
+                    </div>
+
+                    <div className="postbtn "><Link className='no-link-style' to={"/post-item"}><button >Post an item</button></Link></div>
+                    </div>
+
+
+
+
+
+
+        
+        <div className="container items">
+            <h1>Latest Items</h1>
+
+            <div className=" container cards">
+
+
+
+
+                {  post.length===0 ? "currently no item found" :
+                post.map((item) => (
+                    <Card key={item._id} className="cardCon">
+                    {item.images && item.images.length > 0 ? (
+                    <Card.Img className="cardImage" variant="top" src={`http://localhost:8002${item.images[0].url}`} alt={item.itemName} />
+                    ) : (
+                    <Card.Img className="cardImage" variant="top" src="https://via.placeholder.com/300x180?text=No+Image" alt="No Image" />
+                    )}
+                    <Card.Body>
+                    <Card.Title>{item.itemName}</Card.Title>
+                   
+                    <Link to={`/view/${item._id}`}> <button className='cardbtn'>view</button></Link>
+                    </Card.Body>
+                    </Card>
+                    ))}
+            </div>
+        </div> 
+
+        <div className="container guide">
+
+                <h1>How it works</h1>
+                <div className="instruction">
+                    <ul>
+                        <li>
+                            <div className='i1'>
+                                <h3>Post an Item</h3>
+                                <p>Add photo and details</p>
+                             </div>
+
+                        </li>
+
+                        <li>
+                            <div className='i2'>
+                                <h3>Browse Listing</h3>
+                                <p>find what you need</p>
+                           </div>
+                        </li>
+
+
+                        <li>
+                             <div className='i3'>
+                                <h3>Contact seller</h3>
+                                <p>chat or whatsapp</p>
+                            </div>
+                            
+                        </li>
+                    </ul>     
+                </div>
+            </div> 
+     </div>
+  )
+}
+
+    

@@ -1,0 +1,8 @@
+footer a:hover {
+  color: #fff !important;
+  text-decoration: underline;
+}
+
+footer h5 {
+  font-weight: 600;
+}

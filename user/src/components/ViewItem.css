@@ -1,0 +1,78 @@
+.card {
+  border-radius: 12px;
+  margin-top: 70px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+ .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2) !important;
+    cursor: pointer;}
+
+
+.card img {
+      max-height: 336px;
+    max-width: 333px;
+}
+.contactbtn button{ 
+    border: 1px solid rgb(11, 176, 11);
+    background-color: rgb(11, 176, 11);
+    color: white;
+    padding: 11px 4px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    width: 155px;
+}
+@keyframes fadeInSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.itembox{
+  margin-top: 20px;
+      margin-top: 30px;
+    animation: fadeInSlideUp 1s ease-out forwards;
+}
+
+.titleView{
+  color: rgb(11, 176, 11);
+      text-align: center;
+       display: flex;
+        FONT-FAMILY: ui-serif !important;
+    gap: 50px;
+    margin: auto;
+    justify-content: center;
+    margin-top: 49px !important; 
+   
+    margin: 20px
+}
+
+.contactbtn button:hover{
+    background-color: rgb(9, 140, 9);
+    border-color: rgb(9, 140, 9);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width:768px){
+  .viewedCard{
+    height: 468px;
+        text-align: center;
+  }
+
+  .viewdImg{
+    height: 190px !important;
+    width: 100% !important;
+  }
+
+ 
+}

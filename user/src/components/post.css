@@ -1,0 +1,36 @@
+.posthead{
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    color:black;
+    margin-top: 100px;
+}
+
+.box{
+    margin-top: 65px;
+}
+
+@keyframes fadeInSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.headBox{
+    margin-top: 30px;
+    animation: fadeInSlideUp 1s ease-out forwards;
+    margin-top: 30px !important;
+}
+.postTitle{
+    color: rgb(11, 176, 11); 
+    margin-top: 30px;
+}
+
+.post-form{
+    margin-top: 10px;
+}

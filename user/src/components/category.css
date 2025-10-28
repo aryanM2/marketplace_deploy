@@ -1,0 +1,85 @@
+.category-page {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+@keyframes fadeInSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.headBox{
+    margin-top: 30px;
+    animation: fadeInSlideUp 1s ease-out forwards;
+}
+
+.category-box {
+    padding-top: 100px;
+    padding-bottom: 40px;
+}
+
+.category-title{
+    text-align: center;
+    margin-bottom: 40px;
+    
+
+    text-transform: capitalize;
+    background-color: rgb(11, 176, 11) !important;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+ 
+        FONT-FAMILY: ui-serif;
+    
+  
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    justify-content: center;
+}
+.cardInfo{
+    text-align: center !important;
+  
+
+}
+.cards .cardCon {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.cards .cardCon:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.cardCon .cardbtn {
+    border: 1px solid rgb(11, 176, 11);
+    background-color: rgb(11, 176, 11);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-align: center !important;
+}
+
+.no-items-message {
+    grid-column: 1 / -1; /* Span across all columns */
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    color: #6c757d;
+}

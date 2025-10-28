@@ -1,0 +1,67 @@
+import React, { useEffect, useState } from 'react'
+import Navbar from './Navbar'
+import { Card } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import "./mypost.css"
+import Footer from './Footer'
+import axios from 'axios'
+
+export default function Mypost() {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('jwtToken') || localStorage.getItem('token');
+    setLoading(true);
+    axios.get('http://localhost:8002/my-posts', { headers: token ? { Authorization: `Bearer ${token}` } : {} })
+      .then(res => {
+        if (res.data && res.data.status === 1) setPosts(res.data.data || []);
+      })
+      .catch(err => console.error('Failed to load my-posts', err))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const deletePost = (id) => {
+    const token = localStorage.getItem('jwtToken') || localStorage.getItem('token');
+    if (!window.confirm('Delete this post?')) return;
+    axios.delete(`http://localhost:8002/post-item/${id}`, { headers: token ? { Authorization: `Bearer ${token}` } : {} })
+      .then(res => {
+        if (res.data && res.data.status === 1) {
+          setPosts(prev => prev.filter(p => p._id !== id));
+        }
+      })
+      .catch(err => console.error('delete failed', err));
+  }
+
+  return (
+    <div className="box">
+        <Navbar/>
+
+        <div className="container cardBox">
+          <h1>My Post</h1>
+
+          {loading && <p>Loading...</p>}
+
+          <div className='cardB'>
+            {posts.length === 0 && !loading && <p>No posts yet.</p>}
+            {posts.map(post => (
+              <Card key={post._id} className='cardCon'>
+                <Card.Body>
+                  <Card.Title>{post.itemName || 'Untitled'}</Card.Title>
+                  <hr />
+                  <Card.Text>{post.description || ''}</Card.Text>
+                  <div className='btns'>
+                    <Link className='gbtn no-link-style' to={`/view/${post._id}`}>view</Link>
+                    <button className='rbtn'  variant="danger" onClick={() => deletePost(post._id)}>delete</button>
+                  </div>
+                </Card.Body>
+              </Card>
+            ))}
+          </div>
+        </div>
+
+        <Footer/>
+        
+    </div>
+  )
+}

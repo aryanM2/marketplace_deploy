@@ -1,0 +1,534 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Desktop tweak: slightly smaller buttons to reduce bulk on wide screens */
+@media (min-width: 769px) {
+    .login button,
+    .browbtn,
+    .itemButton button,
+    .postbtn button,
+    .cards button,
+    .cardbtnL,
+    .loginbtn,
+    .primary-cta{
+        padding: 8px 18px; /* was 10px 25px */
+        font-size: 14px; /* slightly smaller */
+        border-radius: 16px;
+    }
+
+    /* reduce width of card action buttons so they don't dominate the card */
+    .cards button, .cardbtnL{min-width:unset;width:auto}
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+@keyframes fadeInSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.headBox{
+    margin-top: 30px;
+    animation: fadeInSlideUp 1s ease-out forwards;
+}
+
+.dropbox{
+    background-color: none !important;
+   
+
+}
+
+.navBtns{
+    display: flex;
+    gap: 6px;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    flex-wrap: wrap;
+}
+
+
+
+
+
+.titleLanding {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.search input {
+    border-radius: 20px;
+    height: 38px;
+    flex: 1;
+    max-width: 400px;
+    width: 300px;
+    padding: 0 15px;
+    border: 1px solid #ccc;
+}
+
+/* Nav toggle (checkbox) base styles */
+.nav-toggle{position:absolute;left:-9999px}
+.nav-toggle-label{display:none}
+.nav-toggle-label span{display:block;width:22px;height:2px;background:rgb(11,176,11);border-radius:2px;margin:4px 0;transition:transform .25s ease,opacity .25s ease}
+
+.login button{
+
+      border: 1px solid rgb(11, 176, 11);
+    background-color: rgb(11, 176, 11);
+    color: white;
+    padding: 6px 11px !important;
+    border-radius: 6px !important;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s 
+ease;
+    width: 126px !important ;
+        margin: auto  !important;
+}
+
+
+.browbtn,
+.itemButton button,
+.postbtn button,
+.cards button,
+.cardbtnL { 
+   border: 1px solid rgb(11, 176, 11);
+    background-color: rgb(11, 176, 11);
+    color: white;
+    padding: 6px 11px !important;
+    border-radius: 11px !important;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+     border-radius: 6px !important;
+    width: 126px ;
+        margin: auto ;
+}
+
+
+.login button:hover,
+.browbtn:hover,
+.itemButton button:hover,
+.postbtn button:hover,
+.cards button:hover
+
+{
+    background-color: rgb(9, 140, 9);
+    border-color: rgb(9, 140, 9);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-toggle{
+        border: 1px solid rgb(11, 176, 11);
+    background-color: rgb(11, 176, 11) !important;
+    color: white;
+    padding: 7px 13px !important;
+    border-radius: 6px !important;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s 
+ease;
+}
+
+
+.heading {
+    text-align: center;
+    margin-top: 80px;
+    margin-bottom: 40px;
+}
+
+.heading h1 {
+    font-size: 2.8rem;
+    color: #222;
+    margin-bottom: 1rem;
+        font-family: emoji;
+}
+
+.heading p {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.browbtn {
+    display: block;
+    margin: 0 auto 80px auto;
+    width: fit-content;
+}
+
+
+.itemButton {
+    margin-top: 60px;
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    margin-bottom: 80px;
+    align-items: center;
+}
+.itemButton .Ibtn button {
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+.itemButton .Ibtn button:hover {
+    transform: scale(1.05) translateY(-3px);
+}
+
+.items, .guide {
+    margin-top: 60px;
+    text-align: center;
+}
+
+.items h1, .guide h1 {
+    color: rgb(11, 176, 11);
+    margin-bottom: 40px;
+}
+
+.cards {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+}
+
+.cards .card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.cards .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.instruction {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.instruction ul {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 33px;
+    list-style: none;
+    text-align: center;
+}
+.instruction li {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 20px;
+    border-radius: 10px;
+}
+.instruction li:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+}
+
+.instruction h3 {
+    color: #333;
+}
+
+.instruction p {
+    color: #666;
+}
+
+
+.post {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    padding: 40px 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    width: 80%;
+    margin: 120px auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.post:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.postDesc b {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Login Page Styles */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 60px); /* Full height minus navbar */
+    padding-top: 60px; /* 
+    0To account for fixed navbar */
+    background-color: #f4f7f6;
+}
+
+.login-box {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-box h2 {
+    margin-bottom: 25px;
+    color: #333;
+}
+
+.login-box .input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.login-box .input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #555;
+}
+
+.login-box .input-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(11, 176, 11);
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+    background-color: rgb(9, 140, 9);
+}
+
+.divider {
+    margin: 25px 0;
+    text-align: center;
+    color: #aaa;
+}
+
+.google-btn {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #555;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.google-btn:hover {
+    background-color: #f8f8f8;
+}
+
+.signup-link {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.signup-link a {
+    color: rgb(11, 176, 11);
+    text-decoration: none;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+}
+
+
+.no-link-style {
+  text-decoration: none !important;
+  color: inherit; 
+}
+
+
+@media (max-width: 768px) {
+    .dropdown-toggle{
+        border: 1px solid rgb(11, 176, 11);
+    background-color: rgb(11, 176, 11) !important;
+    color: white;
+    padding: 7px 13px !important;
+    border-radius: 6px !important;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s
+ease;
+width: 127px !important;
+}
+
+
+
+
+
+
+
+  .headBox {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .search input {
+    width: 100%;
+  }
+
+  .navBtns {
+    justify-content: center;
+  }
+  .cardCon {
+      flex: 1 1 calc(50% - 20px);
+    max-width: 46%;
+  }
+
+  .cards {
+    margin-top: 30px;
+    display: flex;
+display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+   
+    align-items: center;
+    border-radius: 26px;
+    background-color: #f8f9fa;
+    width: 281px;
+
+  max-width: calc(108% - 20px);
+          width: 378px;
+        padding: 11px;
+  box-sizing: border-box;
+}
+
+  .cards button{
+    width: 108px !important;
+      border: 1px solid rgb(11, 176, 11);
+    background-color: rgb(11, 176, 11);
+    color: white;
+    padding: 10px 25px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin: auto;
+    justify-content: center;
+}
+
+   .post {
+             justify-content: center;
+        align-items: center;
+        gap: 50px;
+        padding: 19px 18px !important;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        margin-top: 25px;
+        padding: 3px 12px;
+        transition: transform 0.3s ease; box-shadow :0.3s ease;
+        display: block !important;
+        width: 95% !important;
+        margin-top: 62px !important;
+        text-align: center;
+        
+        font-size: 14px;
+    }
+
+.postbtn button{
+        border: 1px solid rgb(11, 176, 11);
+    background-color: rgb(11, 176, 11);
+    color: white;
+    padding: 10px 25px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s 
+ease;
+    width: 155px;
+    margin-top: 30px;
+
+}
+
+  .nav-toggle-label { display: flex; }
+
+  .search,
+  .navBtns {
+    display: none;
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .nav-toggle:checked + nav .search,
+  .nav-toggle:checked + nav .navBtns {
+    display: block;
+  }
+
+  .nav-toggle:checked + nav .navBtns {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .nav-toggle:checked + nav .nav-toggle-label span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+  .nav-toggle:checked + nav .nav-toggle-label span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-toggle:checked + nav .nav-toggle-label span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  .navBtns .login, .navBtns .navbar-item-dropdown, .navBtns button { width: 100%; }
+}
