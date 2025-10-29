@@ -30,7 +30,7 @@ export default function Signup() {
             toast.error("Password fields do not match");
             return;
         }
-        axios.post(`${process.env.REACT_APP_BACKEND_URL}api/register`,registerData)
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/register`,registerData)
         .then((res)=>{
             if (res.data.status === 1) {
                 toast.success("registered successfully")

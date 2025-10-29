@@ -64,8 +64,7 @@ app.get("/", (req, res) => {
   res.send("Backend working ✅");
 });
 
-//categary wise data sending to frontend
-app.get("/api/filter/:type", async (req, res) => {
+app.get("/filter/:type", async (req, res) => {
   const type = req.params.type;
 
   let filteredData = await postItemModel
@@ -93,7 +92,7 @@ app.get("/api/filter/:type", async (req, res) => {
   }
 });
 
-app.get("/api/view-item/:id", async (req, res) => {
+app.get("/view-item/:id", async (req, res) => {
   try {
     const id = req.params.id;
     if (!id) return res.status(400).json({ status: 0, msg: "id required" });
@@ -110,8 +109,7 @@ app.get("/api/view-item/:id", async (req, res) => {
   }
 });
 
-// Delete a post (only owner can delete)
-app.delete("/api/post-item/:id", async (req, res) => {
+app.delete("/post-item/:id", async (req, res) => {
   try {
     if (!req.userId)
       return res.status(401).json({ status: 0, msg: "Unauthorized" });
@@ -146,7 +144,7 @@ app.delete("/api/post-item/:id", async (req, res) => {
   }
 });
 
-app.get("/api/my-posts", async (req, res) => {
+app.get("/my-posts", async (req, res) => {
   try {
     if (!req.userId)
       return res.status(401).json({ status: 0, msg: "Unauthorized" });
@@ -162,7 +160,7 @@ app.get("/api/my-posts", async (req, res) => {
   }
 });
 
-app.get("/api/post/:id", async (req, res) => {
+app.get("/post/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const post = await postItemModel
@@ -181,7 +179,7 @@ app.get("/api/post/:id", async (req, res) => {
   }
 });
 
-app.get("/api/random-view", async (req, res) => {
+app.get("/random-view", async (req, res) => {
   try {
     let allItems = await postItemModel.find().sort({ createdAt: -1 }).limit(10);
     res.send({
@@ -194,7 +192,7 @@ app.get("/api/random-view", async (req, res) => {
   }
 });
 
-app.post("api/register", async (req, res) => {
+app.post("/register", async (req, res) => {
   try {
     await connectDB();
     const { name, email, password } = req.body;
@@ -209,7 +207,7 @@ app.post("api/register", async (req, res) => {
   }
 });
 
-app.post("api/login", async (req, res) => {
+app.post("/login", async (req, res) => {
   try {
     await connectDB();
     const { email, password } = req.body;
@@ -238,7 +236,7 @@ app.post("api/login", async (req, res) => {
   }
 });
 
-app.post("api/post-item-data", upload.array("images", 10), async (req, res) => {
+app.post("/post-item-data", upload.array("images", 10), async (req, res) => {
   try {
     await connectDB();
     if (!req.userId)
