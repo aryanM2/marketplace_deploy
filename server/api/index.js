@@ -173,5 +173,5 @@ app.post("/post-item-data", upload.array("images", 10), async (req, res) => {
 });
 
 app.listen("3000", () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port 3000`);
 });
