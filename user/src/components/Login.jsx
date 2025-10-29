@@ -26,7 +26,7 @@ export default function Login() {
     let doLogin=(e)=>{
         e.preventDefault();
         // POST credentials to server
-        axios.post('http://localhost:8002/login', loginInput)
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/login`, loginInput)
         .then((res)=>{
             const sdata = res.data || {};
             // if server returned a token, store it and navigate

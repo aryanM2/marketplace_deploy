@@ -18,7 +18,7 @@ export default function Category() {
    
            useEffect(() => {
                 window.scrollTo(0, 0);
-                axios.get(`http://localhost:8002/filter/${type}`).then((res)=>{
+                axios.get(`${process.env.REACT_APP_BACKEND_URL}/filter/${type}`).then((res)=>{
                 let data = res.data.filteredData;               
            
                setdata(data)
@@ -40,7 +40,7 @@ export default function Category() {
                 data.length > 0 ? data.map((value) => (
                         <Card key={value._id} className="cardCon card">
                         {value.images && value.images.length > 0 ? (
-                        <Card.Img className="cardImage" variant="top" src={`http://localhost:8002${value.images[0].url}`} alt={value.itemName} />
+                        <Card.Img className="cardImage" variant="top" src={`${process.env.REACT_APP_BACKEND_URL}${value.images[0].url}`} alt={value.itemName} />
                         ) : (
                         <Card.Img className="cardImage" variant="top" src="https://via.placeholder.com/300x180?text=No+Image" alt="No Image" />
                         )}

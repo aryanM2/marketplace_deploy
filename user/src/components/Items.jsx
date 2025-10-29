@@ -8,7 +8,7 @@ export default function Items() {
     const [post, setPost] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:8002/random-view").then((res) => {
+        axios.get(`${process.env.REACT_APP_BACKEND_URL}/random-view`).then((res) => {
             setPost(res.data.allItems);
             
         });
@@ -63,7 +63,7 @@ export default function Items() {
                 post.map((item) => (
                     <Card key={item._id} className="cardCon">
                     {item.images && item.images.length > 0 ? (
-                    <Card.Img className="cardImage" variant="top" src={`http://localhost:8002${item.images[0].url}`} alt={item.itemName} />
+                    <Card.Img className="cardImage" variant="top" src={`${process.env.REACT_APP_BACKEND_URL}${item.images[0].url}`} alt={item.itemName} />
                     ) : (
                     <Card.Img className="cardImage" variant="top" src="https://via.placeholder.com/300x180?text=No+Image" alt="No Image" />
                     )}

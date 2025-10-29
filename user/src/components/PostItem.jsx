@@ -69,7 +69,7 @@ const PostItem = () => {
     }
 
     const token = localStorage.getItem('jwtToken') || localStorage.getItem('token');
-    axios.post('http://localhost:8002/post-item-data', data, {
+    axios.post(`${process.env.REACT_APP_BACKEND_URL}/post-item-data`, data, {
       headers: token ? { Authorization: `Bearer ${token}` } : {}
     })
       .then((res) => {
