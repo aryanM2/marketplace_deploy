@@ -8,6 +8,9 @@ const fs = require("fs");
 const mongoose = require("mongoose");
 const registerModel = require("../Models/register");
 const postItemModel = require("../Models/postItem");
+import dotenv from 'dotenv';
+dotenv.config(); // Load .env variables
+
 
 const app = express();
 app.use(cors());
@@ -47,10 +50,7 @@ app.use(authMiddleware);
 let isConnected = false;
 async function connectDB() {
   if (isConnected) return;
-  // await mongoose.connect(process.env.MONGO_URI, {
-  //   useNewUrlParser: true,
-  //   useUnifiedTopology: true,
-  // });
+  
   await mongoose
     .connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
@@ -171,5 +171,7 @@ app.post("/post-item-data", upload.array("images", 10), async (req, res) => {
   }
 });
 
-// ✅ Export for Vercel (do not use app.listen)
-module.exports = app;
+
+app.listen("3000", () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
