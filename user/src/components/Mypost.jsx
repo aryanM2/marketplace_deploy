@@ -13,7 +13,8 @@ export default function Mypost() {
   useEffect(() => {
     const token = localStorage.getItem('jwtToken') || localStorage.getItem('token');
     setLoading(true);
-    axios.get('http://localhost:8002/my-posts', { headers: token ? { Authorization: `Bearer ${token}` } : {} })
+    const API = process.env.REACT_APP_BACKEND_URL;
+    axios.get(`${API}/my-posts`, { headers: token ? { Authorization: `Bearer ${token}` } : {} })
       .then(res => {
         if (res.data && res.data.status === 1) setPosts(res.data.data || []);
       })
@@ -24,7 +25,8 @@ export default function Mypost() {
   const deletePost = (id) => {
     const token = localStorage.getItem('jwtToken') || localStorage.getItem('token');
     if (!window.confirm('Delete this post?')) return;
-    axios.delete(`http://localhost:8002/post-item/${id}`, { headers: token ? { Authorization: `Bearer ${token}` } : {} })
+    const API = process.env.REACT_APP_BACKEND_URL;
+    axios.delete(`${API}/post-item/${id}`, { headers: token ? { Authorization: `Bearer ${token}` } : {} })
       .then(res => {
         if (res.data && res.data.status === 1) {
           setPosts(prev => prev.filter(p => p._id !== id));

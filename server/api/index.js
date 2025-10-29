@@ -12,12 +12,10 @@ import postItemModel from "../Models/postItem.js";
 
 import dotenv from "dotenv";
 dotenv.config(); // Load .env variables
-
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ✅ Use /tmp for file uploads (Vercel’s writable temp directory)
 const uploadsDir = path.join("/tmp", "uploads");
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 
@@ -27,7 +25,6 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// ✅ Auth Middleware
 function authMiddleware(req, res, next) {
   const auth = req.headers.authorization;
   if (!auth) return next();
@@ -47,7 +44,6 @@ function authMiddleware(req, res, next) {
 }
 app.use(authMiddleware);
 
-// ✅ MongoDB connection (only once per cold start)
 let isConnected = false;
 async function connectDB() {
   if (isConnected) return;
@@ -68,7 +64,6 @@ app.get("/", (req, res) => {
   res.send("Backend working ✅");
 });
 
-// ✅ Routes
 app.get("/", (req, res) => res.send("Student Marketplace Backend Running ✅"));
 
 app.post("/register", async (req, res) => {
@@ -115,7 +110,6 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// ✅ Example protected route (upload item)
 app.post("/post-item-data", upload.array("images", 10), async (req, res) => {
   try {
     await connectDB();

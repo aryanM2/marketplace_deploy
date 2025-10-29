@@ -41,7 +41,8 @@ export default function Landing() {
        }
     
         useEffect(() => {
-            axios.get(`${process.env.REACT_APP_BACKEND_URL}/random-view`).then((res) => {
+            const API = process.env.REACT_APP_BACKEND_URL;
+            axios.get(`${API}/random-view`).then((res) => {
                 setPost(res.data.allItems);
             });
         }, []);

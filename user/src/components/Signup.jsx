@@ -80,7 +80,6 @@ export default function Signup() {
                       <ToastContainer />
                 </form>
                 <div className="divider">OR</div>
-               
                 <div className="signup-link">
                     <p>already have an account? <Link to={"/login"}>Login</Link></p>
                 </div>

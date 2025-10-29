@@ -25,11 +25,11 @@ export default function Login() {
 
     let doLogin=(e)=>{
         e.preventDefault();
-        // POST credentials to server
-        axios.post(`${process.env.REACT_APP_BACKEND_URL}/login`, loginInput)
+        const API = process.env.REACT_APP_BACKEND_URL;
+        axios.post(`${API}/login`, loginInput)
         .then((res)=>{
             const sdata = res.data || {};
-            // if server returned a token, store it and navigate
+      
             if (sdata.jwtToken) {
                 localStorage.setItem('jwtToken', sdata.jwtToken);
                
@@ -43,7 +43,7 @@ export default function Login() {
                  
                
             } else if (sdata.status === 1) {
-                // fallback
+              
                 navigate('/home');
             } else {
                 alert(sdata.msg || 'Login failed');

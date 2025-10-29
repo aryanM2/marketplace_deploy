@@ -19,8 +19,8 @@ const ViewItem = () => {
     if (!id) return;
     setLoading(true);
     const token = localStorage.getItem('jwtToken') || localStorage.getItem('token');
-    axios
-      .get(`http://localhost:8002/view-item/${id}`, {
+    const API = process.env.REACT_APP_BACKEND_URL;
+    axios.get(`${API}/view-item/${id}`, {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       })
       .then((res) => {
@@ -65,7 +65,7 @@ const ViewItem = () => {
             <Col md={6}>
               {item.images && item.images.length > 0 ? (
                 <Card.Img 
-                  src={`http://localhost:8002${item.images[0].url}`}
+                  src={`${process.env.REACT_APP_BACKEND_URL}${item.images[0].url}`}
                   alt={item.itemName}
                   className="viewdImg rounded"
                 />
