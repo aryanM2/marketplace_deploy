@@ -1,16 +1,17 @@
 // api/index.js
-const express = require("express");
-const cors = require("cors");
-const multer = require("multer");
-const jwt = require("jsonwebtoken");
-const path = require("path");
-const fs = require("fs");
-const mongoose = require("mongoose");
-const registerModel = require("../Models/register");
-const postItemModel = require("../Models/postItem");
-import dotenv from 'dotenv';
-dotenv.config(); // Load .env variables
+import express from "express";
+import cors from "cors";
+import multer from "multer";
+import jwt from "jsonwebtoken";
+import path from "path";
+import fs from "fs";
+import mongoose from "mongoose";
 
+import registerModel from "../Models/register.js";
+import postItemModel from "../Models/postItem.js";
+
+import dotenv from "dotenv";
+dotenv.config(); // Load .env variables
 
 const app = express();
 app.use(cors());
@@ -50,7 +51,7 @@ app.use(authMiddleware);
 let isConnected = false;
 async function connectDB() {
   if (isConnected) return;
-  
+
   await mongoose
     .connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
@@ -170,7 +171,6 @@ app.post("/post-item-data", upload.array("images", 10), async (req, res) => {
       .json({ status: 0, msg: "Error saving post", error: err.message });
   }
 });
-
 
 app.listen("3000", () => {
   console.log(`🚀 Server running on port ${PORT}`);
