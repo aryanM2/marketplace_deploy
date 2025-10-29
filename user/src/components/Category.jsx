@@ -18,7 +18,7 @@ export default function Category() {
    
            useEffect(() => {
                 window.scrollTo(0, 0);
-                axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/filter/${type}`).then((res)=>{
+                axios.get(`${process.env.REACT_APP_BACKEND_URL}api/filter/${type}`).then((res)=>{
                 let data = res.data.filteredData;               
            
                setdata(data)

@@ -26,7 +26,7 @@ export default function Login() {
     let doLogin=(e)=>{
         e.preventDefault();
         const API = process.env.REACT_APP_BACKEND_URL;
-        axios.post(`${API}/api/login`, loginInput)
+        axios.post(`${API}api/login`, loginInput)
         .then((res)=>{
             const sdata = res.data || {};
       
