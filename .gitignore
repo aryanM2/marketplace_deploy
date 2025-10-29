@@ -2,7 +2,9 @@
 /server/node_modules
 /user/node_modules
 /server/uploads
-.env
+/server/.env
+/user/.env
+
 
 # Uploaded files
 server/uploads/
