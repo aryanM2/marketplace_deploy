@@ -64,9 +64,7 @@ app.get("/", (req, res) => {
   res.send("Backend working ✅");
 });
 
-app.get("/", (req, res) => res.send("Student Marketplace Backend Running ✅"));
-
-app.post("/register", async (req, res) => {
+app.post("api/register", async (req, res) => {
   try {
     await connectDB();
     const { name, email, password } = req.body;
@@ -81,7 +79,7 @@ app.post("/register", async (req, res) => {
   }
 });
 
-app.post("/login", async (req, res) => {
+app.post("api/login", async (req, res) => {
   try {
     await connectDB();
     const { email, password } = req.body;
@@ -110,7 +108,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.post("/post-item-data", upload.array("images", 10), async (req, res) => {
+app.post("api/post-item-data", upload.array("images", 10), async (req, res) => {
   try {
     await connectDB();
     if (!req.userId)
