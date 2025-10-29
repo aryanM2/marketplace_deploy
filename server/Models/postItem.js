@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const imageMetaSchema = new mongoose.Schema(
   {
@@ -33,4 +33,6 @@ const postItemSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("PostItems", postItemSchema);
+const postItemModel = mongoose.model("PostItem", postItemSchema);
+
+export default postItemModel;
