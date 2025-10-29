@@ -20,7 +20,7 @@ const ViewItem = () => {
     setLoading(true);
     const token = localStorage.getItem('jwtToken') || localStorage.getItem('token');
     const API = process.env.REACT_APP_BACKEND_URL;
-    axios.get(`${API}/view-item/${id}`, {
+    axios.get(`${API}/api/view-item/${id}`, {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       })
       .then((res) => {

@@ -42,7 +42,7 @@ export default function Landing() {
     
         useEffect(() => {
             const API = process.env.REACT_APP_BACKEND_URL;
-            axios.get(`${API}/random-view`).then((res) => {
+            axios.get(`${API}/api/random-view`).then((res) => {
                 setPost(res.data.allItems);
             });
         }, []);

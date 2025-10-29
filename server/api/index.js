@@ -64,6 +64,136 @@ app.get("/", (req, res) => {
   res.send("Backend working ✅");
 });
 
+//categary wise data sending to frontend
+app.get("/api/filter/:type", async (req, res) => {
+  const type = req.params.type;
+
+  let filteredData = await postItemModel
+    .find({ category: type })
+    .sort({ createdAt: -1 });
+  try {
+    if (filteredData) {
+      res.send({
+        status: 1,
+        message: "filtered data",
+        filteredData,
+      });
+    } else if (filteredData.length == 0) {
+      res.send({
+        status: 1,
+        message: "no data found",
+      });
+    }
+  } catch (err) {
+    res.send({
+      status: 1,
+      message: "something went wrong",
+      err,
+    });
+  }
+});
+
+app.get("/api/view-item/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!id) return res.status(400).json({ status: 0, msg: "id required" });
+    const viewData = await postItemModel
+      .findById(id)
+      .populate("owner", "name email");
+    if (!viewData) return res.status(404).json({ status: 0, msg: "Not found" });
+    return res.json({ status: 1, data: viewData });
+  } catch (err) {
+    console.error("view-item error", err);
+    return res
+      .status(500)
+      .json({ status: 0, msg: "something wrong", error: err.message });
+  }
+});
+
+// Delete a post (only owner can delete)
+app.delete("/api/post-item/:id", async (req, res) => {
+  try {
+    if (!req.userId)
+      return res.status(401).json({ status: 0, msg: "Unauthorized" });
+    const id = req.params.id;
+    const post = await postItemModel.findById(id);
+    if (!post)
+      return res.status(404).json({ status: 0, msg: "Post not found" });
+    if (!post.owner || post.owner.toString() !== req.userId)
+      return res.status(403).json({ status: 0, msg: "Forbidden" });
+
+    if (post.images && post.images.length) {
+      for (const img of post.images) {
+        try {
+          const filePath = path.join(
+            __dirname,
+            img.path || "uploads/" + img.filename
+          );
+          if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+        } catch (e) {
+          console.warn("Failed to delete file", e.message);
+        }
+      }
+    }
+
+    await postItemModel.findByIdAndDelete(id);
+    return res.json({ status: 1, msg: "Deleted" });
+  } catch (err) {
+    console.error("delete error", err);
+    return res
+      .status(500)
+      .json({ status: 0, msg: "Server error", error: err.message });
+  }
+});
+
+app.get("/api/my-posts", async (req, res) => {
+  try {
+    if (!req.userId)
+      return res.status(401).json({ status: 0, msg: "Unauthorized" });
+    const posts = await postItemModel
+      .find({ owner: req.userId })
+      .sort({ createdAt: -1 });
+    return res.json({ status: 1, data: posts });
+  } catch (err) {
+    console.error("my-posts error", err);
+    return res
+      .status(500)
+      .json({ status: 0, msg: "Server error", error: err.message });
+  }
+});
+
+app.get("/api/post/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const post = await postItemModel
+      .find({ _id: id })
+      .populate("owner", "name email");
+    if (!post)
+      return res.status(404).json({ status: 0, msg: "Post not found" });
+    const isOwner =
+      req.userId && post.owner && post.owner._id.toString() === req.userId;
+    return res.json({ status: 1, data: post, isOwner });
+  } catch (err) {
+    console.error("get post error", err);
+    return res
+      .status(500)
+      .json({ status: 0, msg: "Server error", error: err.message });
+  }
+});
+
+app.get("/api/random-view", async (req, res) => {
+  try {
+    let allItems = await postItemModel.find().sort({ createdAt: -1 }).limit(10);
+    res.send({
+      status: 1,
+      message: "all items are fetched",
+      allItems,
+    });
+  } catch (err) {
+    status: 0, err;
+  }
+});
+
 app.post("api/register", async (req, res) => {
   try {
     await connectDB();

@@ -14,7 +14,7 @@ export default function Mypost() {
     const token = localStorage.getItem('jwtToken') || localStorage.getItem('token');
     setLoading(true);
     const API = process.env.REACT_APP_BACKEND_URL;
-    axios.get(`${API}/my-posts`, { headers: token ? { Authorization: `Bearer ${token}` } : {} })
+    axios.get(`${API}/api/my-posts`, { headers: token ? { Authorization: `Bearer ${token}` } : {} })
       .then(res => {
         if (res.data && res.data.status === 1) setPosts(res.data.data || []);
       })

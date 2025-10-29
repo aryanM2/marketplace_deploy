@@ -8,7 +8,7 @@ export default function Items() {
     const [post, setPost] = useState([]);
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_BACKEND_URL}/random-view`).then((res) => {
+        axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/random-view`).then((res) => {
             setPost(res.data.allItems);
             
         });
