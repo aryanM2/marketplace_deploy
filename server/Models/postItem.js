@@ -13,20 +13,20 @@ const imageMetaSchema = new mongoose.Schema(
 
 const postItemSchema = new mongoose.Schema(
   {
-    itemName: String,
-    category: String,
-    condition: String,
-    price: String,
-    description: String,
-    name: String,
-    city: String,
-    contactMethod: String,
-    contactInfo: String,
+    itemName: { type: String },
+    category: { type: String },
+    condition: { type: String },
+    price: { type: String },
+    description: { type: String },
+    name: { type: String },
+    city: { type: String },
+    contactMethod: { type: String },
+    contactInfo: { type: String },
     tags: { type: [String], default: [] },
     images: { type: [imageMetaSchema], default: [] },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Register", // ✅ matches model name
+      ref: "Register",
       required: false,
     },
   },
@@ -34,4 +34,5 @@ const postItemSchema = new mongoose.Schema(
 );
 
 const postItemModel = mongoose.model("PostItem", postItemSchema);
+
 export default postItemModel;

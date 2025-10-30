@@ -7,9 +7,6 @@ import path from "path";
 import fs from "fs";
 import mongoose from "mongoose";
 
-import registerModel from "../Models/register.js";
-import postItemModel from "../Models/postItem.js";
-
 import dotenv from "dotenv";
 dotenv.config();
 const app = express();
@@ -59,6 +56,9 @@ async function connectDB() {
   isConnected = true;
   console.log("✅ MongoDB connected");
 }
+
+import registerModel from "../Models/register.js";
+import postItemModel from "../Models/postItem.js";
 
 app.get("/", (req, res) => {
   res.send("Backend working ✅");
