@@ -6,8 +6,7 @@
 /user/.env
 
 
-# Uploaded files
-server/uploads/
+
 
 # Build files
 /build
