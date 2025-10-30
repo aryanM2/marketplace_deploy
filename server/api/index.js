@@ -62,6 +62,9 @@ async function connectDB() {
 
 app.get("/", (req, res) => {
   res.send("Backend working ✅");
+  if (isConnected) {
+    res.send("mongo is connected");
+  }
 });
 
 app.get("/filter/:type", async (req, res) => {
