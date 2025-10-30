@@ -67,6 +67,7 @@
   .viewedCard{
     height: 468px;
         text-align: center;
+        overflow: scroll;
   }
 
   .viewdImg{
