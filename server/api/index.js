@@ -11,7 +11,7 @@ import registerModel from "../Models/register.js";
 import postItemModel from "../Models/postItem.js";
 
 import dotenv from "dotenv";
-dotenv.config(); // Load .env variables
+dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -62,9 +62,6 @@ async function connectDB() {
 
 app.get("/", (req, res) => {
   res.send("Backend working ✅");
-  if (isConnected) {
-    res.send("mongo is connected");
-  }
 });
 
 app.get("/filter/:type", async (req, res) => {
