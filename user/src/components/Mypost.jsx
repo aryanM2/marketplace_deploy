@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import "./mypost.css"
 import Footer from './Footer'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 export default function Mypost() {
   const [posts, setPosts] = useState([]);
@@ -28,6 +29,7 @@ export default function Mypost() {
     const API = process.env.REACT_APP_BACKEND_URL;
     axios.delete(`${API}/post-item/${id}`, { headers: token ? { Authorization: `Bearer ${token}` } : {} })
       .then(res => {
+        toast.success("Deleted succesfully")
         if (res.data && res.data.status === 1) {
           setPosts(prev => prev.filter(p => p._id !== id));
         }
