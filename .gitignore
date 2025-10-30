@@ -1,7 +1,7 @@
 # Dependencies
 /server/node_modules
 /user/node_modules
-/server/uploads
+
 /server/.env
 /user/.env
 
