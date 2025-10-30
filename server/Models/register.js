@@ -12,10 +12,9 @@ const registerSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    // password may be absent for OAuth/Gmail sign-ins
-    required: false,
+
+    required: true,
   },
-  googleId: { type: String },
 });
 const registerModel = mongoose.model("Register", registerSchema);
 export default registerModel;
