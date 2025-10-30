@@ -17,7 +17,7 @@ export default function Navbar() {
   useEffect(() => {
     const loggedUser = localStorage.getItem('loggedUser');
     if (loggedUser) {
-      let firstName = loggedUser.split(" ")[0]
+      let firstName = loggedUser.split("@")[0]
       if (firstName) setUserName(firstName);
     }
 

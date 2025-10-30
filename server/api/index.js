@@ -227,6 +227,7 @@ app.post("/login", async (req, res) => {
       msg: "Login successful",
       jwtToken: token,
       email: user.email,
+      name: user.name,
     });
   } catch (err) {
     console.error(err);
