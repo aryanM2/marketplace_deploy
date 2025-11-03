@@ -6,26 +6,26 @@ import axios from 'axios'
 
 export default function Items() {
     const [post, setPost] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-       useEffect(() => {
-    const fetchPosts = async () => {
-      try {
+    useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/random-view`);
+                if (res.data && res.data.allItems) {
+                    setPost(res.data.allItems);
+                }
+            } catch (error) {
+                console.error("Error fetching items:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/random-view`);
-        if (res.data && res.data.allItems) {
-          setPost(res.data.allItems);
-        } else {
-          console.warn("No items received:", res.data);
-        }
-      } catch (error) {
-        console.error("Error fetching posts:", error.message);
-      
-        setTimeout(fetchPosts, 1000);
-      }
-    };
+        fetchPosts();
+    }, []);
 
-    fetchPosts();
-  }, []);
+
 
 
 
@@ -53,15 +53,12 @@ export default function Items() {
                             </b> 
                     </div>
 
-                    <div className="postbtn "><Link className='no-link-style' to={"/post-item"}><button >Post an item</button></Link></div>
+                    <div className="postbtn ">
+                        <Link className='no-link-style' to={"/post-item"}><button >Post an item</button></Link>
                     </div>
 
+        </div>
 
-
-
-
-
-        
         <div className="container items">
             <h1>Latest Items</h1>
 
@@ -70,8 +67,9 @@ export default function Items() {
 
 
 
-                {  post.length===0 ? "currently no item found" :
-                post.map((item) => (
+                {  loading ? <p>Loading items...</p> :
+                   post.length === 0 ? "currently no item found" :
+                   post.map((item) => (
                     <Card key={item._id} className="cardCon">
                     {item.images && item.images.length > 0 ? (
                     <Card.Img className="cardImage" variant="top" src={`${process.env.REACT_APP_BACKEND_URL}${item.images[0].url}`} alt={item.itemName} />
