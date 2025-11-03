@@ -54,7 +54,7 @@ export default function Landing() {
       } catch (error) {
         console.error("Error fetching posts:", error.message);
   
-        setTimeout(fetchPosts, 4000);
+        setTimeout(fetchPosts, 1000);
       }
     };
 
