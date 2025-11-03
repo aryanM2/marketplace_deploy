@@ -139,7 +139,7 @@ export default function Landing() {
                                          <Card.Img className="cardImage" variant="top" src="https://via.placeholder.com/300x180?text=No+Image" alt="No Image" />
                                          )}
                                          <Card.Body>
-                                         <Card.Title>{item.itemName}</Card.Title>
+                                         <Card.Title title={item.itemName}>{item.itemName}</Card.Title>
                                          
                                         <button onClick={handlebtn} className='cardbtnL'>view</button>
                                          </Card.Body>
