@@ -244,4 +244,9 @@ ease;
     border-radius: 10px;
 }
 
+.cardTitle{
+    max-height: 50px !important;
+    overflow: scroll !important;
+}
+
 }

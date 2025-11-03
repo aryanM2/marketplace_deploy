@@ -5,7 +5,7 @@
     box-sizing: border-box;
 }
 
-/* Desktop tweak: slightly smaller buttons to reduce bulk on wide screens */
+
 @media (min-width: 769px) {
     .login button,
     .browbtn,
@@ -15,12 +15,11 @@
     .cardbtnL,
     .loginbtn,
     .primary-cta{
-        padding: 8px 18px; /* was 10px 25px */
-        font-size: 14px; /* slightly smaller */
+        padding: 8px 18px; 
+        font-size: 14px; 
         border-radius: 16px;
     }
 
-    /* reduce width of card action buttons so they don't dominate the card */
     .cards button, .cardbtnL{min-width:unset;width:auto}
 }
 
@@ -92,7 +91,7 @@ body {
     border: 1px solid #ccc;
 }
 
-/* Nav toggle (checkbox) base styles */
+
 .nav-toggle{position:absolute;left:-9999px}
 .nav-toggle-label{display:none}
 .nav-toggle-label span{display:block;width:22px;height:2px;background:rgb(11,176,11);border-radius:2px;margin:4px 0;transition:transform .25s ease,opacity .25s ease}
@@ -464,6 +463,11 @@ display: flex;
     transition: all 0.3s ease;
     margin: auto;
     justify-content: center;
+}
+
+.cardTitle{
+    max-height: 50px !important;
+    overflow: scroll !important;
 }
 
    .post {
