@@ -7,14 +7,28 @@ import axios from 'axios'
 export default function Items() {
     const [post, setPost] = useState([]);
 
-    useEffect(() => {
-        axios.get(`${process.env.REACT_APP_BACKEND_URL}/random-view`).then((res) => {
-            setPost(res.data.allItems);
-            
-        });
-    }, []);
+       useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        // First request to wake up the backend (optional for Render free tier)
+        await axios.get(`${process.env.REACT_APP_BACKEND_URL}/`);
 
+        // Actual data request
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/random-view`);
+        if (res.data && res.data.allItems) {
+          setPost(res.data.allItems);
+        } else {
+          console.warn("No items received:", res.data);
+        }
+      } catch (error) {
+        console.error("Error fetching posts:", error.message);
+        // Retry after a delay (Render backend might still be waking up)
+        setTimeout(fetchPosts, 4000);
+      }
+    };
 
+    fetchPosts();
+  }, []);
 
 
 
