@@ -248,6 +248,7 @@ app.post("/post-item-data", upload.array("images", 10), async (req, res) => {
       return res.status(401).json({ status: 0, msg: "Unauthorized" });
 
     const {
+      title,
       itemName,
       category,
       condition,
@@ -268,6 +269,7 @@ app.post("/post-item-data", upload.array("images", 10), async (req, res) => {
     }));
 
     const newPost = new postItemModel({
+      itemName: title,
       itemName,
       category,
       condition,
