@@ -50,6 +50,11 @@ export default function Mypost() {
             {posts.length === 0 && !loading && <p>No posts yet.</p>}
             {posts.map(post => (
               <Card key={post._id} className='cardCon'>
+                {(post.images && post.images.length > 0) ? (
+                  <Card.Img className="cardImage" variant="top" src={post.images[0].path} alt={post.itemName} />
+                ) : (
+                  <Card.Img className="cardImage" variant="top" src="https://via.placeholder.com/300x180?text=No+Image" alt="No Image" />
+                )}
                 <Card.Body>
                   <Card.Title>{post.itemName || 'Untitled'}</Card.Title>
                   <hr />
