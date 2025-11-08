@@ -278,8 +278,8 @@ app.post("/post-item-data", upload.array("images", 10), async (req, res) => {
         }
 
         return {
-          url: result.secure_url,
-          public_id: result.public_id,
+          path: result.secure_url,
+          filename: result.public_id,
           size: file.size,
           contentType: file.mimetype,
         };
