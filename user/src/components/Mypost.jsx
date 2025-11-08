@@ -17,7 +17,9 @@ export default function Mypost() {
     const API = process.env.REACT_APP_BACKEND_URL;
     axios.get(`${API}/my-posts`, { headers: token ? { Authorization: `Bearer ${token}` } : {} })
       .then(res => {
-        if (res.data && res.data.status === 1) setPosts(res.data.data || []);
+        if (res.data?.status === 1) {
+          setPosts(res.data.data || []);
+        }
       })
       .catch(err => console.error('Failed to load my-posts', err))
       .finally(() => setLoading(false));

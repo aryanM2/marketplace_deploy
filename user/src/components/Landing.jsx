@@ -44,7 +44,7 @@ export default function Landing() {
     const fetchPosts = async () => {
       try {
         const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/random-view`);
-        if (res.data && res.data.allItems) {
+        if (res.data?.status === 1 && res.data.allItems) {
           setPost(res.data.allItems);
         } else {
           console.warn("No items received:", res.data);
