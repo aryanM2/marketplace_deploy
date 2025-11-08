@@ -6,13 +6,14 @@ import Footer from "./Footer";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 
 
 
 const PostItem = () => {
-  
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: "",
     category: "",
@@ -75,7 +76,12 @@ const PostItem = () => {
       .then((res) => {
      
         toast.success("item is posted successfully")
-        window.scrollTo(0,0)
+
+        setTimeout(() => {
+           navigate('/home');
+          
+        }, 1000);
+       
         
       })
       .catch((err) => {
