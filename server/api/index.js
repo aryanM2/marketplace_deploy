@@ -3,9 +3,9 @@ import express from "express";
 import cors from "cors";
 import multer from "multer";
 import jwt from "jsonwebtoken";
-import path from "path";
-import fs from "fs";
 import mongoose from "mongoose";
+import { v2 as cloudinary } from "cloudinary";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -13,15 +13,21 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const uploadsDir = path.join(process.cwd(), "uploads");
-if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, uploadsDir),
-  filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname),
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
 });
+
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "student_marketplace",
+    allowed_formats: ["jpg", "png", "jpeg"],
+  },
+});
+
 const upload = multer({ storage });
-app.use("/uploads", express.static(uploadsDir));
 
 function authMiddleware(req, res, next) {
   const auth = req.headers.authorization;
@@ -86,7 +92,7 @@ app.get("/filter/:type", async (req, res) => {
     }
   } catch (err) {
     res.send({
-      status: 1,
+      status: 0,
       message: "something went wrong",
       err,
     });
@@ -122,16 +128,9 @@ app.delete("/post-item/:id", async (req, res) => {
       return res.status(403).json({ status: 0, msg: "Forbidden" });
 
     if (post.images && post.images.length) {
-      for (const img of post.images) {
-        try {
-          const filePath = path.join(
-            __dirname,
-            img.path || "uploads/" + img.filename
-          );
-          if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
-        } catch (e) {
-          console.warn("Failed to delete file", e.message);
-        }
+      const publicIds = post.images.map((img) => img.filename).filter(Boolean);
+      if (publicIds.length > 0) {
+        await cloudinary.api.delete_resources(publicIds);
       }
     }
 
@@ -189,7 +188,11 @@ app.get("/random-view", async (req, res) => {
       allItems,
     });
   } catch (err) {
-    status: 0, err;
+    console.error("/random-view error", err);
+    res.status(500).send({
+      status: 0,
+      message: "Error fetching items",
+    });
   }
 });
 
@@ -258,11 +261,10 @@ app.post("/post-item-data", upload.array("images", 10), async (req, res) => {
     } = req.body;
 
     const files = (req.files || []).map((file) => ({
-      filename: file.filename,
-      path: file.path,
+      filename: file.filename, // public_id from Cloudinary
+      path: file.path, // secure Cloudinary URL
       contentType: file.mimetype,
       size: file.size,
-      url: `/uploads/${file.filename}`,
     }));
 
     const newPost = new postItemModel({

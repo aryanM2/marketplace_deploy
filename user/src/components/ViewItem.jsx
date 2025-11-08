@@ -65,7 +65,7 @@ const ViewItem = () => {
             <Col md={6}>
               {item.images && item.images.length > 0 ? (
                 <Card.Img 
-                  src={`${process.env.REACT_APP_BACKEND_URL}${item.images[0].url}`}
+                  src={item.images[0].path}
                   alt={item.itemName}
                   className="viewdImg rounded"
                 />

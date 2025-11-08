@@ -134,7 +134,7 @@ export default function Landing() {
                      post.map((item) => (
                                          <Card key={item._id} className="cardCon card">
                                          {item.images && item.images.length > 0 ? (
-                                         <Card.Img className="cardImage" variant="top" src={`${process.env.REACT_APP_BACKEND_URL}${item.images[0].url}`} alt={item.itemName} />
+                                         <Card.Img className="cardImage" variant="top" src={item.images[0].path} alt={item.itemName} />
                                          ) : (
                                          <Card.Img className="cardImage" variant="top" src="https://via.placeholder.com/300x180?text=No+Image" alt="No Image" />
                                          )}

@@ -46,12 +46,12 @@ export default function Login() {
               
                 navigate('/home');
             } else {
-                alert(sdata.msg || 'Login failed');
+                toast.error(sdata.msg || 'Login failed');
             }
         })
         .catch(err => {
             console.error('login error', err.response ? err.response.data : err.message);
-            alert(err.response && err.response.data && err.response.data.msg ? err.response.data.msg : 'Login failed');
+            toast.error(err.response?.data?.msg || 'Login failed');
         });
     }
 
