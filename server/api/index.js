@@ -73,12 +73,12 @@ app.get("/", (req, res) => {
 });
 
 app.get("/filter/:type", async (req, res) => {
-  const type = req.params.type;
-
-  let filteredData = await postItemModel
-    .find({ category: type })
-    .sort({ createdAt: -1 });
   try {
+    await connectDB();
+    const type = req.params.type;
+    let filteredData = await postItemModel
+      .find({ category: type })
+      .sort({ createdAt: -1 });
     if (filteredData) {
       res.send({
         status: 1,
@@ -102,6 +102,7 @@ app.get("/filter/:type", async (req, res) => {
 
 app.get("/view-item/:id", async (req, res) => {
   try {
+    await connectDB();
     const id = req.params.id;
     if (!id) return res.status(400).json({ status: 0, msg: "id required" });
     const viewData = await postItemModel
@@ -119,6 +120,7 @@ app.get("/view-item/:id", async (req, res) => {
 
 app.delete("/post-item/:id", async (req, res) => {
   try {
+    await connectDB();
     if (!req.userId)
       return res.status(401).json({ status: 0, msg: "Unauthorized" });
     const id = req.params.id;
@@ -147,6 +149,7 @@ app.delete("/post-item/:id", async (req, res) => {
 
 app.get("/my-posts", async (req, res) => {
   try {
+    await connectDB();
     if (!req.userId)
       return res.status(401).json({ status: 0, msg: "Unauthorized" });
     const posts = await postItemModel
@@ -163,6 +166,7 @@ app.get("/my-posts", async (req, res) => {
 
 app.get("/post/:id", async (req, res) => {
   try {
+    await connectDB();
     const id = req.params.id;
     const post = await postItemModel
       .find({ _id: id })
@@ -182,6 +186,7 @@ app.get("/post/:id", async (req, res) => {
 
 app.get("/random-view", async (req, res) => {
   try {
+    await connectDB();
     let allItems = await postItemModel.find().sort({ createdAt: -1 }).limit(10);
     res.send({
       status: 1,
@@ -264,11 +269,13 @@ app.post("/post-item-data", upload.array("images", 10), async (req, res) => {
     const uploadedFiles = await Promise.all(
       (req.files || []).map(async (file) => {
         const result = await cloudinary.uploader.upload(file.path, {
-          folder: "marketplace",
+          folder: "student_marketplace",
           resource_type: "image",
         });
 
-        fs.unlinkSync(file.path);
+        if (fs.existsSync(file.path)) {
+          fs.unlinkSync(file.path);
+        }
 
         return {
           url: result.secure_url,
