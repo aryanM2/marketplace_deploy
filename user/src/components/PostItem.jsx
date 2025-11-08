@@ -76,9 +76,10 @@ const PostItem = () => {
       .then((res) => {
      
         toast.success("item is posted successfully")
-
+        
+        window.scrollTo(0,0)
         setTimeout(() => {
-           navigate('/home');
+           navigate('/');
           
         }, 1000);
        
