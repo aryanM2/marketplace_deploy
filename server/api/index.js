@@ -6,6 +6,8 @@ import jwt from "jsonwebtoken";
 import path from "path";
 import fs from "fs";
 import mongoose from "mongoose";
+import { v2 as cloudinary } from "cloudinary";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -13,15 +15,21 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const uploadsDir = path.join(process.cwd(), "uploads");
-if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, uploadsDir),
-  filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname),
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
 });
+
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "student_marketplace_uploads",
+    allowed_formats: ["jpg", "png", "jpeg"],
+  },
+});
+
 const upload = multer({ storage });
-app.use("/uploads", express.static(uploadsDir));
 
 function authMiddleware(req, res, next) {
   const auth = req.headers.authorization;
@@ -258,11 +266,11 @@ app.post("/post-item-data", upload.array("images", 10), async (req, res) => {
     } = req.body;
 
     const files = (req.files || []).map((file) => ({
-      filename: file.filename,
+      filename: file.originalname,
       path: file.path,
       contentType: file.mimetype,
       size: file.size,
-      url: `/uploads/${file.filename}`,
+      url: file.path,
     }));
 
     const newPost = new postItemModel({
