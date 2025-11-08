@@ -249,7 +249,6 @@ app.post("/post-item-data", upload.array("images", 10), async (req, res) => {
 
     const {
       title,
-      itemName,
       category,
       condition,
       price,
@@ -261,16 +260,26 @@ app.post("/post-item-data", upload.array("images", 10), async (req, res) => {
       tags,
     } = req.body;
 
-    const files = (req.files || []).map((file) => ({
-      filename: file.filename, // public_id from Cloudinary
-      path: file.path, // secure Cloudinary URL
-      contentType: file.mimetype,
-      size: file.size,
-    }));
+    const uploadedFiles = await Promise.all(
+      (req.files || []).map(async (file) => {
+        const result = await cloudinary.uploader.upload(file.path, {
+          folder: "marketplace",
+          resource_type: "image",
+        });
+
+        fs.unlinkSync(file.path);
+
+        return {
+          url: result.secure_url,
+          public_id: result.public_id,
+          size: file.size,
+          contentType: file.mimetype,
+        };
+      })
+    );
 
     const newPost = new postItemModel({
       itemName: title,
-      itemName,
       category,
       condition,
       price,
@@ -284,7 +293,7 @@ app.post("/post-item-data", upload.array("images", 10), async (req, res) => {
           ? tags
           : tags.split(",").map((t) => t.trim())
         : [],
-      images: files,
+      images: uploadedFiles,
       owner: req.userId,
     });
 
