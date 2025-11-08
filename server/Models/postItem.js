@@ -6,7 +6,6 @@ const imageMetaSchema = new mongoose.Schema(
     path: String,
     contentType: String,
     size: Number,
-    url: String,
   },
   { _id: false }
 );
