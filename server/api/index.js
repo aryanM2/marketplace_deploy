@@ -28,7 +28,8 @@ const storage = new CloudinaryStorage({
   },
 });
 
-const upload = multer({ storage });
+const memoryStorage = multer.memoryStorage();
+const upload = multer({ storage: memoryStorage });
 
 function authMiddleware(req, res, next) {
   const auth = req.headers.authorization;
@@ -267,19 +268,19 @@ app.post("/post-item-data", upload.array("images", 10), async (req, res) => {
       tags,
     } = req.body;
 
-    // Ensure Cloudinary is set up
-    const cloudinary = require("cloudinary").v2;
-
     const uploadedFiles = await Promise.all(
       (req.files || []).map(async (file) => {
         try {
-          const result = await cloudinary.uploader.upload(file.path, {
-            folder: "student_marketplace",
+          const result = await new Promise((resolve, reject) => {
+            const uploadStream = cloudinary.uploader.upload_stream(
+              { folder: "student_marketplace" },
+              (error, result) => {
+                if (error) return reject(error);
+                resolve(result);
+              }
+            );
+            uploadStream.end(file.buffer);
           });
-
-          const fs = require("fs");
-          fs.unlinkSync(file.path);
-
           return {
             filename: file.filename,
             path: result.secure_url,
