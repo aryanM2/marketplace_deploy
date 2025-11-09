@@ -250,6 +250,7 @@ app.post("/login", async (req, res) => {
 app.post("/post-item-data", upload.array("images", 10), async (req, res) => {
   try {
     await connectDB();
+
     if (!req.userId)
       return res.status(401).json({ status: 0, msg: "Unauthorized" });
 
@@ -266,25 +267,34 @@ app.post("/post-item-data", upload.array("images", 10), async (req, res) => {
       tags,
     } = req.body;
 
+    // Ensure Cloudinary is set up
+    const cloudinary = require("cloudinary").v2;
+
     const uploadedFiles = await Promise.all(
       (req.files || []).map(async (file) => {
-        const result = await cloudinary.uploader.upload(file.path, {
-          folder: "student_marketplace",
-          resource_type: "image",
-        });
+        try {
+          const result = await cloudinary.uploader.upload(file.path, {
+            folder: "student_marketplace",
+          });
 
-        if (fs.existsSync(file.path)) {
+          const fs = require("fs");
           fs.unlinkSync(file.path);
-        }
 
-        return {
-          path: result.secure_url,
-          filename: result.public_id,
-          size: file.size,
-          contentType: file.mimetype,
-        };
+          return {
+            filename: file.filename,
+            path: result.secure_url,
+            contentType: file.mimetype,
+            size: file.size,
+            url: result.secure_url,
+          };
+        } catch (err) {
+          console.error("Cloudinary upload error:", err);
+          return null;
+        }
       })
     );
+
+    const validFiles = uploadedFiles.filter((f) => f !== null);
 
     const newPost = new postItemModel({
       itemName: title,
@@ -301,17 +311,24 @@ app.post("/post-item-data", upload.array("images", 10), async (req, res) => {
           ? tags
           : tags.split(",").map((t) => t.trim())
         : [],
-      images: uploadedFiles,
+      images: validFiles,
       owner: req.userId,
     });
 
     await newPost.save();
-    res.json({ status: 1, msg: "Post saved" });
+
+    res.json({
+      status: 1,
+      msg: "Post saved successfully with images",
+      data: newPost,
+    });
   } catch (err) {
     console.error(err);
-    res
-      .status(500)
-      .json({ status: 0, msg: "Error saving post", error: err.message });
+    res.status(500).json({
+      status: 0,
+      msg: "Error saving post",
+      error: err.message,
+    });
   }
 });
 

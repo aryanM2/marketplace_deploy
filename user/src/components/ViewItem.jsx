@@ -63,13 +63,23 @@ const ViewItem = () => {
         <Card className="shadow-sm p-3 viewedCard">
           <Row>
             <Col md={6}>
-              {item.images && item.images.length > 0 ? (
-                <Card.Img 
-                  src={item.images[0].path}
-                  alt={item.itemName}
-                  className="viewdImg rounded"
-                />
-              ) : null}
+                  {item.images && item.images.length > 0 ? (
+                    <Card.Img
+                      src={
+                        item.images[0].path.startsWith("http")
+                          ? item.images[0].path
+                          : `${process.env.REACT_APP_BACKEND_URL}/${item.images[0].path}`
+                      }
+                      alt={item.itemName || "Item image"}
+                      className="viewdImg rounded"
+                    />
+                  ) : (
+                    <Card.Img
+                      src="https://via.placeholder.com/400x300?text=No+Image+Available"
+                      alt="No Image Available"
+                      className="viewdImg rounded"
+                    />
+                  )}
             </Col>
 
             <Col md={6}>

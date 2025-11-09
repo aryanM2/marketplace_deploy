@@ -67,22 +67,46 @@ export default function Items() {
 
 
 
-                {  loading ? <p>Loading items...</p> :
-                   post.length === 0 ? "currently no item found" :
-                   post.map((item) => (
-                    <Card key={item._id} className="cardCon">
-                    {(item.images && item.images.length > 0) ? (
-                    <Card.Img className="cardImage" variant="top" src={item.images[0].path} alt={item.itemName} />
-                    ) : (
-                    <Card.Img className="cardImage" variant="top" src="https://via.placeholder.com/300x180?text=No+Image" alt="No Image" />
-                    )}
-                    <Card.Body>
-                    <Card.Title className="cardTitle" title={item.itemName}>{item.itemName}</Card.Title>
-                   
-                    <Link to={`/view/${item._id}`}> <button className='cardbtn'>view</button></Link>
-                    </Card.Body>
-                    </Card>
-                    ))}
+                {
+  loading ? (
+    <p>Loading items...</p>
+  ) : post.length === 0 ? (
+    <p>Currently no items found</p>
+  ) : (
+    post.map((item) => {
+      
+      const imageUrl = item.images?.[0]?.path
+        ? item.images[0].path.startsWith("http")
+          ? item.images[0].path
+          : `${process.env.REACT_APP_BACKEND_URL}/${item.images[0].path}`
+        : "https://via.placeholder.com/300x180?text=No+Image";
+
+      return (
+        <Card key={item._id} className="cardCon">
+          <Card.Img
+            className="cardImage"
+            variant="top"
+            src={imageUrl}
+            alt={item.itemName || "Item image"}
+          />
+          <Card.Body>
+            <Card.Title
+              className="cardTitle"
+              title={item.itemName}
+            >
+              {item.itemName}
+            </Card.Title>
+
+            <Link to={`/view/${item._id}`}>
+              <button className="cardbtn">View</button>
+            </Link>
+          </Card.Body>
+        </Card>
+      );
+    })
+  )
+}
+
             </div>
         </div> 
 

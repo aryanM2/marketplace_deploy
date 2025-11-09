@@ -14,6 +14,7 @@ import { toast, ToastContainer } from 'react-toastify';
 export default function Landing() {
        const [post, setPost] = useState([]);
        const [search,setsearch] = useState("");
+       const [loading, setLoading] = useState(true);
        let navigate = useNavigate()
 
        let handlesearch=(e)=>{
@@ -44,6 +45,7 @@ export default function Landing() {
     const fetchPosts = async () => {
       try {
         const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/random-view`);
+        setLoading(false);
         if (res.data?.status === 1 && res.data.allItems) {
           setPost(res.data.allItems);
         } else {
@@ -51,6 +53,7 @@ export default function Landing() {
         }
       } catch (error) {
         console.error("Error fetching posts:", error.message);
+        setLoading(false);
   
         setTimeout(fetchPosts, 1000);
       }
@@ -127,24 +130,46 @@ export default function Landing() {
             <ToastContainer/>
 
             <div className="container cards">
-                
-                     { post.length===0 ? "currently no item available" :
-                     
-                     
-                     post.map((item) => (
-                                         <Card key={item._id} className="cardCon card">
-                                         {item.images && item.images.length > 0 ? (
-                                         <Card.Img className="cardImage" variant="top" src={item.images[0].path} alt={item.itemName} />
-                                         ) : (
-                                         <Card.Img className="cardImage" variant="top" src="https://via.placeholder.com/300x180?text=No+Image" alt="No Image" />
-                                         )}
-                                         <Card.Body>
-                                         <Card.Title className="cartTile" title={item.itemName}>{item.itemName}</Card.Title>
-                                         
-                                        <button onClick={handlebtn} className='cardbtnL'>view</button>
-                                         </Card.Body>
-                                         </Card>
-                                         ))}
+                {
+  loading ? (
+    <p>Loading items...</p>
+  ) : post.length === 0 ? (
+    <p>Currently no items found</p>
+  ) : (
+    post.map((item) => {
+    
+      const imageUrl = item.images?.[0]?.path
+        ? item.images[0].path.startsWith("http")
+          ? item.images[0].path
+          : `${process.env.REACT_APP_BACKEND_URL}/${item.images[0].path}`
+        : "https://via.placeholder.com/300x180?text=No+Image";
+
+      return (
+        <Card key={item._id} className="cardCon">
+          <Card.Img
+            className="cardImage"
+            variant="top"
+            src={imageUrl}
+            alt={item.itemName || "Item image"}
+          />
+          <Card.Body>
+            <Card.Title
+              className="cardTitle"
+              title={item.itemName}
+            >
+              {item.itemName}
+            </Card.Title>
+
+            <Link to={`/view/${item._id}`}>
+              <button className="cardbtn">View</button>
+            </Link>
+          </Card.Body>
+        </Card>
+      );
+    })
+  )
+}
+
             </div>
         </div>  
 
