@@ -6,6 +6,7 @@ import Navbar from "./Navbar";
 import axios from "axios";
 import ContactSeller from "./contact";
 import Footer from "./Footer";
+import { getImageUrl } from "../utils/getImageUrl";
 
 
 const ViewItem = () => {
@@ -65,11 +66,7 @@ const ViewItem = () => {
             <Col md={6}>
                   {item.images && item.images.length > 0 ? (
                     <Card.Img
-                      src={
-                        item.images[0].path.startsWith("http")
-                          ? item.images[0].path
-                          : `${process.env.REACT_APP_BACKEND_URL}/${item.images[0].path}`
-                      }
+                       src={getImageUrl(item.images?.[0]?.path) || "https://via.placeholder.com/300x180?text=No+Image"}
                       alt={item.itemName || "Item image"}
                       className="viewdImg rounded"
                     />

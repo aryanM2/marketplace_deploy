@@ -3,6 +3,7 @@ import { Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import "./Item.css"
 import axios from 'axios'
+import { getImageUrl } from "../utils/getImageUrl";
 
 export default function Items() {
     const [post, setPost] = useState([]);
@@ -75,18 +76,14 @@ export default function Items() {
   ) : (
     post.map((item) => {
       
-      const imageUrl = item.images?.[0]?.path
-        ? item.images[0].path.startsWith("http")
-          ? item.images[0].path
-          : `${process.env.REACT_APP_BACKEND_URL}/${item.images[0].path}`
-        : "https://via.placeholder.com/300x180?text=No+Image";
+      
 
       return (
         <Card key={item._id} className="cardCon">
           <Card.Img
             className="cardImage"
             variant="top"
-            src={imageUrl}
+            src={getImageUrl(item.images?.[0]?.path) || "https://via.placeholder.com/300x180?text=No+Image"}
             alt={item.itemName || "Item image"}
           />
           <Card.Body>
